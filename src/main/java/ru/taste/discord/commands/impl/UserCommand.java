@@ -546,14 +546,14 @@ public class UserCommand extends Command {
         );
 
         callback.addActionRow( //
-                AdvancedButton.secondary().id("user_app_keys_management_button").label("Keys Management").values(applicationId).build(Emoji.fromCustom("keys_management", 1156343026910773409L, false)), //
-                AdvancedButton.secondary().id("user_app_users_management_button").label("Users Management").values(applicationId).build(Emoji.fromCustom("users_management", 1156340329449005196L, false)), //
-                AdvancedButton.secondary().id("user_app_sales_statistic_button").label("Sales Statistic").values(applicationId).build(Emoji.fromCustom("statistic", 1156343902899556352L, false)) //
+                AdvancedButton.secondary().id("user_app_keys_management_button").label("Keys Management").emoji(EmojiEnum.KEYS_MANAGEMENT).values(applicationId).build(), //
+                AdvancedButton.secondary().id("user_app_users_management_button").label("Users Management").emoji(EmojiEnum.USERS_MANAGEMENT).values(applicationId).build(), //
+                AdvancedButton.secondary().id("user_app_sales_statistic_button").label("Sales Statistic").emoji(EmojiEnum.STATISTIC).values(applicationId).build() //
         );
 
         callback.addActionRow( //
-                AdvancedButton.secondary().id("user_setup_backup_server_button").label("Setup Backup Server").values(applicationId).build(Emoji.fromCustom("discord", 1156344904486752397L, false)), //
-                AdvancedButton.success().id("user_developer_api_button").label("Developer API").values(applicationId).build(Emoji.fromCustom("api", 1156346858998874162L, false)) //
+                AdvancedButton.secondary().id("user_setup_backup_server_button").label("Setup Backup Server").emoji(EmojiEnum.DISCORD).values(applicationId).build(), //
+                AdvancedButton.success().id("user_developer_api_button").label("Developer API").emoji(EmojiEnum.CODE).values(applicationId).build() //
         );
 
         callback.addActionRow( //

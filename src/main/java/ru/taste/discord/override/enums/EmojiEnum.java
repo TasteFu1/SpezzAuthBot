@@ -3,6 +3,7 @@ package ru.taste.discord.override.enums;
 import net.dv8tion.jda.api.entities.emoji.Emoji;
 
 import lombok.AllArgsConstructor;
+import ru.taste.discord.override.AdvancedButton;
 
 @AllArgsConstructor
 public enum EmojiEnum {
@@ -17,7 +18,12 @@ public enum EmojiEnum {
     HARDWARE_EDIT("hardware_edit", 1156298903403122813L), //
     HARDWARE_PERIOD("hardware_period", 1156298900983009350L), //
     TOGGLE_LEFT("toggle_left", 1156319425872527461L), //
-    TOGGLE_RIGHT("toggle_right", 1156336041876279339L);
+    TOGGLE_RIGHT("toggle_right", 1156336041876279339L), //
+    KEYS_MANAGEMENT("keys_management", 1156343026910773409L), //
+    USERS_MANAGEMENT("users_management", 1156340329449005196L), //
+    STATISTIC("statistic", 1156343902899556352L), //
+    DISCORD("discord", 1156344904486752397L), //
+    CODE("code", 1156355035131809943L);
 
     private final String name;
     private final long id;
