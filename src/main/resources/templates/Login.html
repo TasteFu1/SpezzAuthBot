@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/style.css}">
+    <link rel="shortcut icon" href="https://i.ibb.co/6Pt2fyD/SE-512.png"/>
+
+    <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
+
+    <title>Login</title>
+</head>
+
+<body>
+<div id="con" class="container">
+    <div class="logo">
+        <img src="https://spezz.com/uploads/monthly_2023_08/spezz_logo_white_full.png.c155ed5d758c52aa3eb497d0c5a1f5a7.png"
+             alt="Logo">
+        <hr>
+    </div>
+
+    <div class="sign">
+        <h2>Login</h2>
+    </div>
+
+    <form action="/login" method="post" onsubmit="return isCaptchaPassed()">
+        <input name="token" type="hidden" th:value="${token}">
+        <input name="email" id="email" type="email" placeholder="Email" required>
+        <input name="password" id="password" type="password" placeholder="Password" required>
+
+        <div class="h-captcha" data-sitekey="82166526-4163-4405-9d11-2143751b673f"></div>
+
+        <div class="submit">
+            <button type="submit">Login</button>
+        </div>
+
+        <div class="warning">
+            <p id="warning">Warning: captcha required!</p>
+        </div>
+    </form>
+</div>
+
+<script>
+    function isCaptchaPassed() {
+        const captchaResponse = hcaptcha.getResponse();
+
+        if (captchaResponse) {
+            return true;
+        } else {
+            document.getElementById("con").style.maxHeight = "380px"
+            document.getElementById("warning").style.display = "block";
+            return false;
+        }
+    }
+
+</script>
+</body>
+</html>

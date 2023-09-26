@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/style.css}">
+    <link rel="shortcut icon" href="https://i.ibb.co/6Pt2fyD/SE-512.png"/>
+
+    <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
+
+    <title>Response</title>
+</head>
+
+<body>
+<div id="con" class="container">
+    <div class="logo">
+        <img src="https://spezz.com/uploads/monthly_2023_08/spezz_logo_white_full.png.c155ed5d758c52aa3eb497d0c5a1f5a7.png"
+             alt="Logo">
+        <hr>
+    </div>
+
+    <div class="sign">
+        <h2 th:text="${title}">Title</h2>
+    </div>
+
+    <div class="message">
+        <p th:text="${message}">Message</p>
+    </div>
+</div>
+</body>
+</html>

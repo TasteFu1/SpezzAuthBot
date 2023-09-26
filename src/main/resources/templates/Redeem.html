@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/style.css}">
+    <link rel="shortcut icon" href="https://i.ibb.co/6Pt2fyD/SE-512.png"/>
+
+    <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
+
+    <title>Redeem</title>
+</head>
+
+<body>
+<div id="con" class="container">
+    <div class="logo">
+        <img src="https://spezz.com/uploads/monthly_2023_08/spezz_logo_white_full.png.c155ed5d758c52aa3eb497d0c5a1f5a7.png"
+             alt="Logo">
+        <hr>
+    </div>
+
+    <div class="sign">
+        <h2>Verify</h2>
+    </div>
+
+    <form id="redeemForm" method="post" th:action="'/redeem/' + ${type}">
+        <input name="token" type="hidden" th:value="${token}">
+        <div class="h-captcha captcha" data-sitekey="82166526-4163-4405-9d11-2143751b673f"
+             data-callback="onCaptchaSuccess"></div>
+    </form>
+</div>
+
+<script>
+    function onCaptchaSuccess(response) {
+        document.getElementById('redeemForm').submit();
+    }
+</script>
+</body>
+</html>

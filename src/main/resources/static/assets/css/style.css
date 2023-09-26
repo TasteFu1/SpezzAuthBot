@@ -1,0 +1,105 @@
+body {
+    background-color: #111217;
+    color: white;
+}
+
+.container {
+    max-width: 300px;
+    max-height: 360px;
+    padding: 40px;
+    background-color: #15161d;
+    box-shadow: 0 0 6px #15161d;
+    border-radius: 16px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.logo {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.logo img {
+    max-width: 140px;
+}
+
+.message {
+    text-align: center;
+}
+
+.message p {
+    font-family: Arial;
+    color: lightgrey;
+}
+
+.submit {
+    text-align: center;
+}
+
+.warning {
+    text-align: right;
+    font-family: Arial;
+    color: darkred;
+}
+
+#warning {
+    display: none;
+}
+
+.h-captcha {
+    margin-top: 10px;
+}
+
+.submit button {
+    width: 60%;
+    padding: 14px;
+    margin-bottom: 40px;
+    color: white;
+    font-family: Arial;
+    background-image: linear-gradient(to right, #6c69ce, #8a69c2);
+    box-shadow: 0 0 6px #8a69c2;
+    border: none;
+    outline: none;
+    border-radius: 24px;
+    position: relative;
+    top: 20px;
+    cursor: pointer;
+}
+
+.submit button:hover {
+    box-shadow: 0 0 10px #8a69c2;
+}
+
+.sign {
+    text-align: center;
+}
+
+.sign h2 {
+    font-family: Arial;
+    font-size: 18px;
+    color: lightgrey;
+    margin: 20px;
+}
+
+
+.container input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #111217;
+    border: none;
+    outline: none;
+    border-radius: 16px;
+    box-shadow: 0 0 6px #111217;
+    position: relative;
+    right: 10px;
+    color: white;
+}
+
+.container input::placeholder {
+    font-family: Arial;
+    font-size: 14px;
+    color: lightgrey;
+}
