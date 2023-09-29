@@ -712,10 +712,33 @@ public class UserCommand extends Command {
         Callback callback = Callback.builder(event).addEmbeds(embed);
 
         callback.addActionRow( //
-                AdvancedButton.success().id("user_generate_app_keys_button").label("Generate Keys").values(applicationId).build(), //
-                AdvancedButton.primary().id("user_show_app_keys_button").label("Show Keys").values(applicationId).disabled(licenseList.isEmpty()).build(), //
-                AdvancedButton.primary().id("user_show_specific_key_button").label("Show Specific Key").values(applicationId).disabled(licenseList.isEmpty()).build(), //
-                AdvancedButton.danger().id("user_delete_unused_app_keys_button").label("Delete Unused Keys").values(applicationId).disabled(unusedList.isEmpty()).build() //
+                AdvancedButton.success() //
+                        .id("user_generate_app_keys_button") //
+                        .label("Generate Keys") //
+                        .values(applicationId) //
+                        .emoji(EmojiEnum.DIGITAL_KEY) //
+                        .build(), //
+                AdvancedButton.primary() //
+                        .id("user_show_app_keys_button") //
+                        .label("Show Keys") //
+                        .values(applicationId) //
+                        .emoji(EmojiEnum.KEYS) //
+                        .disabled(licenseList.isEmpty()) //
+                        .build(), //
+                AdvancedButton.primary() //
+                        .id("user_show_specific_key_button") //
+                        .label("Show Specific Key") //
+                        .values(applicationId) //
+                        .emoji(EmojiEnum.KEY_INFO) //
+                        .disabled(licenseList.isEmpty()) //
+                        .build(), //
+                AdvancedButton.danger() //
+                        .id("user_delete_unused_app_keys_button") //
+                        .label("Delete Unused Keys") //
+                        .values(applicationId) //
+                        .emoji(EmojiEnum.TRASH_KEY) //
+                        .disabled(unusedList.isEmpty()) //
+                        .build() //
         );
 
         callback.addActionRow( //
@@ -789,7 +812,7 @@ public class UserCommand extends Command {
 
         ReplyCallbackAction callback = event.replyEmbeds(embed);
 
-        callback.addActionRow(AdvancedButton.primary().id("user_download_file_button").label("Download").values(fileRequest.getId().toString()).build());
+        callback.addActionRow(AdvancedButton.download().id("user_download_file_button").values(fileRequest.getId().toString()).build());
         callback.addActionRow(AdvancedButton.back().id("user_app_keys_management_button").values(applicationId).build());
 
         callback.queue();
@@ -930,19 +953,21 @@ public class UserCommand extends Command {
         ReplyCallbackAction callback = event.replyEmbeds(embed);
 
         callback.addActionRow( //
-                AdvancedButton.primary().id("user_download_keys_button") //
-                        .label("Download") //
+                AdvancedButton.download() //
+                        .id("user_download_keys_button") //
                         .values(keysFile.getId().toString(), keysDetailedFile.getId().toString()) //
                         .build(), //
                 AdvancedButton.primary() //
                         .id("user_show_specific_app_keys_button") //
                         .label("Prev Page") //
                         .values(applicationId, typeValue, String.valueOf(page - 1)).disabled(page == 1) //
+                        .emoji(EmojiEnum.LEFT) //
                         .build(), //
                 AdvancedButton.primary() //
                         .id("user_show_specific_app_keys_button") //
                         .label("Next Page") //
                         .values(applicationId, typeValue, String.valueOf(page + 1)) //
+                        .emoji(EmojiEnum.RIGHT) //
                         .disabled(page * step > licenseList.size()) //
                         .build() //
         );
@@ -1018,10 +1043,14 @@ public class UserCommand extends Command {
                 .setFooter(spezzFooter()[0], spezzFooter()[1]) //
                 .build();
 
-        event.replyEmbeds(embed) //
-                .addActionRow(AdvancedButton.primary().id("user_show_app_profile_button").label("Holder Info").values(appProfile.getId().toString()).build()) //
-                .addActionRow(AdvancedButton.back().id("user_app_keys_management_button").values(applicationId).build()) //
-                .queue();
+        ReplyCallbackAction callback = event.replyEmbeds(embed);
+
+        if (license.getAccountId() != null) {
+            callback.addActionRow(AdvancedButton.primary().id("user_show_app_profile_button").label("Holder Info").values(appProfile.getId().toString()).emoji(EmojiEnum.USER_INFO).build());
+        }
+
+        callback.addActionRow(AdvancedButton.back().id("user_app_keys_management_button").values(applicationId).build());
+        callback.queue();
     }
 
     private void deleteUnusedKeysButton(ButtonInteractionEvent event, String applicationId) {
@@ -1120,8 +1149,8 @@ public class UserCommand extends Command {
         Callback callback = Callback.builder(event).addEmbeds(embed);
 
         callback.addActionRow( //
-                AdvancedButton.primary().id("user_show_app_users_button").label("Show Users").values(applicationId).disabled(allList.isEmpty()).build(), //
-                AdvancedButton.primary().id("user_show_specific_app_user_button").label("Show Specific User").values(applicationId).disabled(allList.isEmpty()).build() //
+                AdvancedButton.primary().id("user_show_app_users_button").label("Show Users").values(applicationId).emoji(EmojiEnum.USERS).disabled(allList.isEmpty()).build(), //
+                AdvancedButton.primary().id("user_show_specific_app_user_button").label("Show Specific User").values(applicationId).emoji(EmojiEnum.USER_INFO).disabled(allList.isEmpty()).build() //
         );
 
         callback.addActionRow( //
@@ -1162,7 +1191,7 @@ public class UserCommand extends Command {
     private void showSpecificUsersButton(ButtonInteractionEvent event, List<String> values) {
         String applicationId = values.get(0);
         String filerValue = values.get(1);
-        String pageValue = values.get(1);
+        String pageValue = values.get(2);
 
         Application application = applicationRepository.findById(UUID.fromString(applicationId)).get();
         List<AppProfile> appProfileList = null;
@@ -1221,21 +1250,22 @@ public class UserCommand extends Command {
         ReplyCallbackAction callback = event.replyEmbeds(embed);
 
         callback.addActionRow( //
-                AdvancedButton.primary() //
+                AdvancedButton.download() //
                         .id("user_download_file_button") //
-                        .label("Download") //
                         .values(fileRequest.getId().toString()) //
                         .build(), //
                 AdvancedButton.primary() //
                         .id("user_show_specific_users_button") //
                         .label("Prev Page") //
                         .values(applicationId, filerValue, String.valueOf(page - 1)) //
+                        .emoji(EmojiEnum.LEFT) //
                         .disabled(page == 1) //
                         .build(), //
                 AdvancedButton.primary() //
                         .id("user_show_specific_users_button") //
                         .label("Next Page") //
                         .values(applicationId, filerValue, String.valueOf(page + 1)) //
+                        .emoji(EmojiEnum.RIGHT) //
                         .disabled(page * step > appProfileList.size()) //
                         .build() //
         );
@@ -1310,25 +1340,40 @@ public class UserCommand extends Command {
                         .id("user_grant_app_user_admin_button") //
                         .label(String.format("%s Admin", admin ? "Discharge" : "Grant")) //
                         .values(appProfileId) //
+                        .emoji(admin ? EmojiEnum.USER_MINUS : EmojiEnum.USER_MARK) //
                         .disabled(owner || banned) //
                         .build(), //
                 AdvancedButton.builder() //
                         .style(banned ? ButtonStyle.SUCCESS : ButtonStyle.DANGER) //
                         .id("user_ban_app_user_button") //
                         .label(String.format("%s User", banned ? "Unban" : "Ban")) //
-                        .values(appProfileId).disabled(owner) //
+                        .values(appProfileId) //
+                        .emoji(banned ? EmojiEnum.USER_PLUS : EmojiEnum.USER_MINUS) //
+                        .disabled(owner) //
                         .build(), //
                 AdvancedButton.danger() //
                         .id("user_delete_app_user_button") //
                         .label("Delete User") //
                         .values(appProfileId) //
+                        .emoji(EmojiEnum.USER_CROSS) //
                         .disabled(owner) //
                         .build() //
         );
 
         callback.addActionRow( //
-                AdvancedButton.primary().id("user_reset_app_user_hardware_id_button").label("Reset Hardware Id").values(appProfileId).disabled(appProfile.getHardwareId() == null).build(), //
-                AdvancedButton.primary().id("user_set_app_user_hardware_id_button").label("Set Hardware Id").values(appProfileId).build() //
+                AdvancedButton.primary() //
+                        .id("user_reset_app_user_hardware_id_button") //
+                        .label("Reset Hardware Id") //
+                        .values(appProfileId) //
+                        .emoji(EmojiEnum.HARDWARE_RESET) //
+                        .disabled(appProfile.getHardwareId() == null) //
+                        .build(), //
+                AdvancedButton.primary() //
+                        .id("user_set_app_user_hardware_id_button") //
+                        .label("Set Hardware Id") //
+                        .values(appProfileId) //
+                        .emoji(EmojiEnum.HARDWARE_EDIT) //
+                        .build() //
         );
 
         callback.addActionRow( //
@@ -1562,11 +1607,13 @@ public class UserCommand extends Command {
                         .id("user_change_profile_name_button") //
                         .label("Change Profile Name") //
                         .values(profileId) //
+                        .emoji(EmojiEnum.EDIT) //
                         .build(), //
                 AdvancedButton.primary() //
                         .id("user_manage_profile_hardware_button") //
                         .label(String.format("%s Hardware Id", profile.getHardwareId() == null ? "Set" : "Reset")) //
                         .values(profileId) //
+                        .emoji(profile.getHardwareId() == null ? EmojiEnum.HARDWARE_EDIT : EmojiEnum.HARDWARE_RESET) //
                         .build() //
         );
 

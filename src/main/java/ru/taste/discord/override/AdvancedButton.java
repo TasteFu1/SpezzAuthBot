@@ -27,23 +27,27 @@ public class AdvancedButton {
     }
 
     public static AdvancedButton primary() {
-        return new AdvancedButton().style(ButtonStyle.PRIMARY);
+        return builder().style(ButtonStyle.PRIMARY);
     }
 
     public static AdvancedButton success() {
-        return new AdvancedButton().style(ButtonStyle.SUCCESS);
+        return builder().style(ButtonStyle.SUCCESS);
     }
 
     public static AdvancedButton danger() {
-        return new AdvancedButton().style(ButtonStyle.DANGER);
+        return builder().style(ButtonStyle.DANGER);
     }
 
     public static AdvancedButton secondary() {
-        return new AdvancedButton().style(ButtonStyle.SECONDARY);
+        return builder().style(ButtonStyle.SECONDARY);
     }
 
     public static AdvancedButton back() {
-        return new AdvancedButton().style(ButtonStyle.SECONDARY).label("Back").emoji(EmojiEnum.BACK);
+        return secondary().label("Back").emoji(EmojiEnum.BACK);
+    }
+
+    public static AdvancedButton download() {
+        return primary().label("Download").emoji(EmojiEnum.FILE);
     }
 
     //setters
@@ -82,8 +86,8 @@ public class AdvancedButton {
         return Button.of(style, valuesButtonId(), label).withEmoji(nullableEmoji()).withDisabled(disabled);
     }
 
-    public Button build(Emoji emoji) {
-        return Button.of(style, valuesButtonId(), label).withEmoji(emoji).withDisabled(disabled);
+    public Button test(Emoji emoji) {
+        return Button.of(style, valuesButtonId(), label).withEmoji(emoji).withDisabled(false);
     }
 
     //utilities

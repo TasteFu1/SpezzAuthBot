@@ -1,6 +1,7 @@
 package ru.taste.discord.commands;
 
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.emoji.Emoji;
 import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
 
 import java.awt.Color;
@@ -70,6 +71,10 @@ public abstract class Command {
 
     public String[] spezzFooter() {
         return new String[]{"spezz.com", "https://spezz.space/assets/images/SE-512.png"};
+    }
+
+    public Emoji custom(String name, long id) {
+        return Emoji.fromCustom(name, id, false);
     }
 
     /*** methods ***/
