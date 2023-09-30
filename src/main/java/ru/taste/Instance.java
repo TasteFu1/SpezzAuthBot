@@ -13,6 +13,7 @@ import lombok.Getter;
 import ru.taste.database.entities.Account;
 import ru.taste.database.repositories.ApplicationRepository;
 import ru.taste.database.repositories.AppProfileRepository;
+import ru.taste.database.repositories.DiscordTokenRepository;
 import ru.taste.database.repositories.FileRequestRepository;
 import ru.taste.database.repositories.LicenseRepository;
 import ru.taste.database.repositories.ReportRepository;
@@ -20,16 +21,26 @@ import ru.taste.database.repositories.SubscriptionRepository;
 import ru.taste.database.repositories.AccountRepository;
 import ru.taste.discord.commands.CommandHandler;
 import ru.taste.discord.handlers.EventListener;
+import ru.taste.discord.oauth.DiscordOAuth;
 import ru.taste.utilities.java.StringUtils;
 
 @Getter
 public class Instance {
+    /*** discord api instance ***/
+    private JDA jda;
+
+    /*** discord oauth instance ***/
+    private DiscordOAuth discordOAuth;
+
     /*** discord bot values ***/
     private final String BOT_TOKEN = "MTE0ODcwNTk1NTg1NzU4NDE0MA.GF3YV5.QaYowj144Bo4ys3YkN7NuwzP07p8JYqb4YLqqk";
     private final List<GatewayIntent> BOT_INTENTS = List.of(GatewayIntent.MESSAGE_CONTENT, GatewayIntent.GUILD_MEMBERS, GatewayIntent.GUILD_MESSAGES, GatewayIntent.DIRECT_MESSAGES);
 
-    /*** discord api instance ***/
-    private JDA jda;
+    /*** discord oauth values ***/
+    private final String CLIENT_ID = "1127176221000736868";
+    private final String CLIENT_SECRET = "fRLRD8nrVTG-VGYH69luMwYNG8-lS2TF";
+    private final String REDIRECT_URI = "https://spezz.space/discord/authorization";
+    private final String[] SCOPES = new String[]{"identify", "guilds", "guilds.join"};
 
     /*** repositories ***/
     private AccountRepository accountRepository;
@@ -39,6 +50,7 @@ public class Instance {
     private LicenseRepository licenseRepository;
     private FileRequestRepository fileRequestRepository;
     private AppProfileRepository appProfileRepository;
+    private DiscordTokenRepository discordTokenRepository;
 
     /*** handlers ***/
     private CommandHandler commandHandler;
@@ -51,10 +63,23 @@ public class Instance {
         this.licenseRepository = context.getBean(LicenseRepository.class);
         this.fileRequestRepository = context.getBean(FileRequestRepository.class);
         this.appProfileRepository = context.getBean(AppProfileRepository.class);
+        this.discordTokenRepository = context.getBean(DiscordTokenRepository.class);
 
-        this.jda = JDABuilder.createDefault(BOT_TOKEN).enableIntents(BOT_INTENTS).addEventListeners(new EventListener()).build().awaitReady();
+        this.jda = JDABuilder.createDefault(BOT_TOKEN) //
+                .enableIntents(BOT_INTENTS) //
+                .addEventListeners(new EventListener()) //
+                .build() //
+                .awaitReady();
 
-        this.commandHandler = CommandHandler.builder().build(jda);
+        this.discordOAuth = DiscordOAuth.builder() //
+                .clientID(CLIENT_ID) //
+                .clientSecret(CLIENT_SECRET) //
+                .redirectUri(REDIRECT_URI) //
+                .scopes(SCOPES) //
+                .build();
+
+        this.commandHandler = CommandHandler.builder() //
+                .build(jda);
 
         //admins
         for (String discordId : List.of("1125786717526425640", "1012334624862642176", "782423823814754324", "1017719595546718259")) {

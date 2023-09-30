@@ -1,5 +1,6 @@
 package ru.taste.controllers;
 
+import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.channel.concrete.PrivateChannel;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -49,7 +50,7 @@ public class RedeemController {
         return instance().getAppProfileRepository();
     }
 
-    private PrivateChannel getChannel(String discordId) {
+    private PrivateChannel privateChannel(String discordId) {
         return ChannelUtils.getChannelByUserId(discordId);
     }
 
@@ -130,8 +131,8 @@ public class RedeemController {
 
         subscriptionRepository().save(subscription);
 
-        if (getChannel(discordId) != null) {
-            getChannel(discordId).sendMessageEmbeds(EmbedUtils.success().setDescription("Subscription has been activated, run `/user` command.").build()).queue();
+        if (privateChannel(discordId) != null) {
+            privateChannel(discordId).sendMessageEmbeds(EmbedUtils.success().setDescription("Subscription has been activated, run `/user` command.").build()).queue();
         }
 
         return ResponseUtils.success("Subscription has been activated, return to discord.");
@@ -219,8 +220,11 @@ public class RedeemController {
 
         appProfileRepository().save(appProfile);
 
-        if (getChannel(discordId) != null) {
-            getChannel(discordId).sendMessageEmbeds(EmbedUtils.success().setDescription("License has been activated, run `/user` command and press `Library` button.").build()).queue();
+        if (privateChannel(discordId) != null) {
+            String message = "License has been activated, run `/user` command and press `Library` button.";
+            MessageEmbed embed = EmbedUtils.success().setDescription(message).build();
+
+            privateChannel(discordId).sendMessageEmbeds(embed).queue();
         }
 
         return ResponseUtils.success("License has been activated, return to discord.");

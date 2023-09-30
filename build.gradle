@@ -33,6 +33,7 @@ dependencies {
     implementation 'org.apache.httpcomponents:httpclient:4.5.14'
     implementation 'com.google.code.gson:gson:2.10.1'
     implementation 'org.knowm.xchart:xchart:3.8.5'
+    implementation 'org.jsoup:jsoup:1.16.1'
 
     runtimeOnly 'com.mysql:mysql-connector-j'
 

@@ -32,6 +32,10 @@ public class LoginController {
         return instance().getAccountRepository();
     }
 
+    private PrivateChannel privateChannel(String discordId) {
+        return ChannelUtils.getChannelByUserId(discordId);
+    }
+
     @GetMapping("/login")
     private ModelAndView loginGet(HttpServletRequest request, @RequestParam String token) {
         try {
@@ -91,15 +95,12 @@ public class LoginController {
         account.setDiscordId(discordId);
         accountRepository().save(account);
 
-        PrivateChannel privateChannel = ChannelUtils.getChannelByUserId(discordId);
+        if (privateChannel(discordId) != null) {
+            String title = "Account Linking";
+            String message = "Account has been linked successfully, run `/user` command.";
+            MessageEmbed embed = EmbedUtils.success().setTitle(title).setDescription(message).build();
 
-        if (privateChannel != null) {
-            MessageEmbed embed = EmbedUtils.success() //
-                    .setTitle("Account Linking") //
-                    .setDescription("Account has been linked successfully, run `/user` command.") //
-                    .build();
-
-            privateChannel.sendMessageEmbeds(embed).queue();
+            privateChannel(discordId).sendMessageEmbeds(embed).queue();
         }
 
         return ResponseUtils.success("Account has been linked successfully, return to discord.");

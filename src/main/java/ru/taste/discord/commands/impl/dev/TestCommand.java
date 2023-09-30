@@ -29,11 +29,7 @@ public class TestCommand extends Command {
 
     @Override
     public void execute(SlashCommandHandler handler) {
-        try {
-            handler.getEvent().reply(EncryptionUtils.decrypt("Kae6aq9Uv0n3o1oQnS2iHg==")).queue();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        handler.getEvent().reply(instance.getDiscordOAuth().getAuthorizationURL()).queue();
     }
 
     @Override

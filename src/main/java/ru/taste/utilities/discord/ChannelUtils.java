@@ -8,9 +8,9 @@ import ru.taste.Instance;
 
 public class ChannelUtils {
     public static PrivateChannel getChannelByUserId(String discordId) {
-        for (PrivateChannel privateChannel : Instance.get().getJda().getPrivateChannels()) {
-            if (Objects.requireNonNull(privateChannel.getUser()).getId().equals(discordId)) {
-                return privateChannel;
+        for (PrivateChannel channel : Instance.get().getJda().getPrivateChannels()) {
+            if (channel.getUser() != null && channel.getUser().getId().equals(discordId)) {
+                return channel;
             }
         }
 

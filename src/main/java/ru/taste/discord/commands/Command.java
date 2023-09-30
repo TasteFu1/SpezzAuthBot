@@ -10,6 +10,7 @@ import lombok.Getter;
 import ru.taste.Instance;
 import ru.taste.database.repositories.ApplicationRepository;
 import ru.taste.database.repositories.AppProfileRepository;
+import ru.taste.database.repositories.DiscordTokenRepository;
 import ru.taste.database.repositories.FileRequestRepository;
 import ru.taste.database.repositories.LicenseRepository;
 import ru.taste.database.repositories.ReportRepository;
@@ -32,6 +33,7 @@ public abstract class Command {
     protected final LicenseRepository licenseRepository = instance.getLicenseRepository();
     protected final FileRequestRepository fileRequestRepository = instance.getFileRequestRepository();
     protected final AppProfileRepository appProfileRepository = instance.getAppProfileRepository();
+    protected final DiscordTokenRepository discordTokenRepository = instance.getDiscordTokenRepository();
 
     /*** colors ***/
     protected final Color INFO_COLOR = new Color(0x80ff);
